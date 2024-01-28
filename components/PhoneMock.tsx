@@ -18,7 +18,7 @@ const PhoneMock = ({ children }: PropsWithChildren) => {
         src={PhoneTemplate}
         alt="iphone mock body"
         fill
-        className="absolute hidden pointer-events-none sm:block"
+        className="absolute hidden pointer-events-none drop-shadow-xl sm:block"
       />
     </div>
   );

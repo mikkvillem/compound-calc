@@ -9,6 +9,14 @@
   --pallette-green-light: hsla(120, 100%, 99%, 1);
 }
 
+.recharts-tooltip-item-list {
+  display: flex;
+  gap: 6px;
+}
+.recharts-tooltip-wrapper {
+  width: 100%;
+}
+
 .bg-calc {
   background-size: 10px 10px;
   background-image: repeating-linear-gradient(
