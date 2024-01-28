@@ -27,7 +27,10 @@ const Input = ({ label, name, ...restProps }: InputProps) => {
       />
       {errorMessage && (
         <div className="absolute peer-focus-within:hidden -bottom-7">
-          <div className="w-0 h-0 -mb-1 border-b-4 border-x-4 border-x-transparent border-b-pallette-green-light"></div>
+          <div
+            id="triangle"
+            className="w-0 h-0 ml-1 -mb-1 border-b-4 border-x-4 border-x-transparent border-b-pallette-green-light"
+          />
           <p className="inline px-1 py-0.5 text-xs text-red-600 rounded-sm bg-pallette-green-light">
             {errorMessage}
           </p>

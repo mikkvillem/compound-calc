@@ -1,5 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, Tooltip, ResponsiveContainer } from 'recharts';
+
 type ChartData = {
   name: string;
   balance: number;
@@ -7,7 +8,7 @@ type ChartData = {
   interest: number;
 };
 
-type Props = {
+type ChartProps = {
   data: ChartData[];
 };
 
@@ -38,7 +39,7 @@ const CustomTooltip = ({ active, payload, label }: Partial<TooltipProps>) => {
   return null;
 };
 
-const Chart = (props: Props) => {
+const Chart = (props: ChartProps) => {
   return (
     <ResponsiveContainer
       height={180}

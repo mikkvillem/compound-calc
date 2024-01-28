@@ -32,10 +32,11 @@ const calculateFutureValue = (
     presentValueSum =
       Math.pow(1 + dailyRateOfReturn, daysInPeriod) * presentValueSum + contribution;
 
-    if (i % 12 === 0) {
+    if (i % durationMultiplier === 0) {
       yearlyTotals.push(presentValueSum);
     }
   }
+
   return { totalFutureValue: presentValueSum, yearlyTotals };
 };
 
@@ -62,7 +63,7 @@ const Calculator = () => {
   );
 
   const chartData = yearlyTotals.map((balance, index) => {
-    const principal = initialInvestment + index * 12 * contribution;
+    const principal = initialInvestment + index * durationMultiplier * contribution;
     const interest = balance - principal;
     return {
       name: `Year ${index}`,
