@@ -3,31 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --pallette-black: hsla(153, 80%, 6%, 1);
+  --pallette-green: hsla(149, 35%, 78%, 1);
+  --pallette-green-dark: hsla(151, 77%, 30%, 1);
+  --pallette-green-light: hsla(120, 100%, 99%, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.bg-calc {
+  background-size: 10px 10px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--pallette-green-light) 0,
+    var(--pallette-green-light) 1px,
+    var(--pallette-green) 0,
+    var(--pallette-green) 50%
+  );
 }
