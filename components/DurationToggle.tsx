@@ -8,7 +8,7 @@ interface ToggleProps {
   onChange: () => void;
 }
 
-const Toggle = ({ label, onChange, value }: ToggleProps) => {
+const DurationToggle = ({ label, onChange, value }: ToggleProps) => {
   const monthlyActive = value;
   const yearlyActive = !value;
   return (
@@ -36,4 +36,4 @@ const Toggle = ({ label, onChange, value }: ToggleProps) => {
   );
 };
 
-export default Toggle;
+export default DurationToggle;

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Input from './Input';
-import Toggle from './Toggle';
+import DurationToggle from './DurationToggle';
 import Chart from './Chart';
 
 const formatToCurrency = (number: number) => {
@@ -13,7 +13,7 @@ const formatToCurrency = (number: number) => {
   }).format(number);
 };
 
-const calculateFutureValue = (
+const calculateCompoundFutureValue = (
   initialInvestment: number,
   contribution: number,
   investmentPeriods: number,
@@ -21,7 +21,7 @@ const calculateFutureValue = (
   dailyRateOfReturn: number
 ) => {
   const durationMultiplier = monthlyInterval ? 12 : 1;
-  let presentValueSum = initialInvestment;
+  let futureValueSum = initialInvestment;
   let yearlyTotals = [initialInvestment];
 
   for (let i = 1; i <= investmentPeriods; i++) {
@@ -29,15 +29,14 @@ const calculateFutureValue = (
     const daysInPeriod = 365 / durationMultiplier;
 
     // - assuming contributions are added at the end of the period, thus not collecting interest for the current period
-    presentValueSum =
-      Math.pow(1 + dailyRateOfReturn, daysInPeriod) * presentValueSum + contribution;
+    futureValueSum = Math.pow(1 + dailyRateOfReturn, daysInPeriod) * futureValueSum + contribution;
 
     if (i % durationMultiplier === 0) {
-      yearlyTotals.push(presentValueSum);
+      yearlyTotals.push(futureValueSum);
     }
   }
 
-  return { totalFutureValue: presentValueSum, yearlyTotals };
+  return { totalFutureValue: futureValueSum, yearlyTotals };
 };
 
 const Calculator = () => {
@@ -54,13 +53,15 @@ const Calculator = () => {
 
   const totalInvested = initialInvestment + totalContributions;
 
-  const { totalFutureValue, yearlyTotals } = calculateFutureValue(
+  const { totalFutureValue, yearlyTotals } = calculateCompoundFutureValue(
     initialInvestment,
     contribution,
     investmentPeriods,
     monthlyInterval,
     dailyRateOfReturn
   );
+
+  const totalReturnOnInvestment = (totalFutureValue / totalInvested - 1) * 100;
 
   const chartData = yearlyTotals.map((balance, index) => {
     const principal = initialInvestment + index * durationMultiplier * contribution;
@@ -102,7 +103,7 @@ const Calculator = () => {
               onChange={(e) => setContribution(Math.abs(e.target.valueAsNumber))}
             />
           </div>
-          <Toggle
+          <DurationToggle
             label="Contribution frequency"
             value={monthlyInterval}
             onChange={() => setMonthlyInterval((prev) => !prev)}
@@ -132,10 +133,9 @@ const Calculator = () => {
         <h4 className="mt-4 text-sm text-pallette-green-light sm:text-xs">Total future value:</h4>
         <div className="flex items-end justify-between">
           <p className="text-2xl text-pallette-green-light">{formatToCurrency(totalFutureValue)}</p>
-          <p className="text-sm text-pallette-green-light">{`(${(
-            (totalFutureValue / totalInvested - 1) *
-            100
-          ).toFixed(2)} %)`}</p>
+          <p className="text-sm text-pallette-green-light">
+            ({totalReturnOnInvestment.toFixed(2)} %)
+          </p>
         </div>
         <h4 className="mt-4 text-sm text-pallette-green-light sm:text-xs">Total contributions:</h4>
         <p className="text-2xl text-pallette-green-light">{formatToCurrency(totalInvested)}</p>
